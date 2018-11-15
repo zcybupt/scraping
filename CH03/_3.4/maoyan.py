@@ -1,3 +1,6 @@
+import json
+import time
+
 import requests
 import re
 
@@ -22,7 +25,7 @@ def parse_one_page(html):
     for item in items:
         yield {
             'index': item[0],
-            'image': item[1],
+            'image': item[1][:-16],
             'title': item[2].strip(),
             'actor': item[3].strip()[3:] if len(item[3]) > 3 else '',
             'time': item[4].strip()[5:] if len(item[4]) > 5 else '',
@@ -30,12 +33,20 @@ def parse_one_page(html):
         }
 
 
-def main():
-    url = 'http://maoyan.com/board/4'
+def write_to_file(content):
+    with open('result.txt', 'a', encoding='utf-8') as f:
+        print(type(json.dumps(content)))
+        f.write(json.dumps(content, ensure_ascii=False) + '\n')
+
+
+def main(offset):
+    url = 'http://maoyan.com/board/4?offset=' + str(offset)
     html = get_one_page(url)
-    result = parse_one_page(html)
-    print(result)
+    for content in parse_one_page(html):
+        write_to_file(content)
 
 
 if __name__ == '__main__':
-    main()
+    for i in range(10):
+        main(offset=i * 10)
+        time.sleep(1)
