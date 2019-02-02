@@ -1,5 +1,6 @@
 import json
 
+# json 中必须使用双引号
 str = '''
 [{
     "name": "Bob",
@@ -14,5 +15,6 @@ str = '''
 
 print(type(str))
 data = json.loads(str)
-print(data)
-print(type(data))
+print(data[0]['name'])
+print(data[0]['gender'])
+print(data[1]['name'])
