@@ -14,6 +14,6 @@ end
 """
 
 # 使用 quote() 方法将脚本进行 URL 转码
-url = 'http://137.100.100.128:8050/execute?lua_source=' + quote(lua)
+url = 'http://137.1.1.128:8050/execute?lua_source=' + quote(lua)
 response = requests.get(url)
 print(response.text)
